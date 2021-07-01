@@ -1,3 +1,5 @@
+
+
 var rover = {
     x: 0,
     y: 0,
@@ -63,7 +65,7 @@ function turnRight(rover) {
     console.log(`Rover Direction: ${rover.direction}`)
 }
 
-turnRight(rover);
+// turnRight(rover);
 
 
 function moveForward(rover) {
@@ -72,41 +74,72 @@ function moveForward(rover) {
 
         case rover.direction = "N":
             if (rover.y === 0) {
-               console.log("you are out");
+                console.log("you are out");
             } else {
-                rover.y = rover.y-1;
-           }
-           break;
+                rover.y = rover.y - 1;
+            }
+            break;
 
         case rover.direction = "S":
-            if(rover.y === 9){
+            if (rover.y === 9) {
                 console.log("you are out");
-            }else{
-                rover.y = rover.y+1;
+            } else {
+                rover.y = rover.y + 1;
             }
             break;
 
         case rover.direction = "W":
-            if(rover.x === 0){
+            if (rover.x === 0) {
                 console.log("you are out");
-            }else{
-                rover.x = rover.x-1;
+            } else {
+                rover.x = rover.x - 1;
             }
             break;
         case rover.direction = "E":
-            if(rover.x === 9){
+            if (rover.x === 9) {
                 console.log("you are out")
-            }else{
-                rover.x = rover.x+1;
+            } else {
+                rover.x = rover.x + 1;
             }
             break;
-     }    
-     console.log(rover); 
+    }
+    console.log(rover);
 }
 
-moveForward(rover);
+// moveForward(rover);
 
 
-// function piloteRover(rover){
 
-// }
+function pilotRover(rover) {
+    var listOfCommands = ["r", "f", "l"];
+
+    for (var i = 0; i <= listOfCommands.length; i++) {
+        switch (rover === listOfCommands[i]) {
+
+            case "f":
+                moveForward(rover);
+                console.log(moveForward(rover))
+                break;
+
+            case "r":
+                turnRight(rover);
+                console.log(turnRight(rover))
+
+                break;
+
+            case "l":
+                turnLeft(rover);
+                console.log(turnLeft(rover))
+
+                break;
+
+            default:
+                console.log("Only this commands are possible: l, r or f");
+                break;
+        }
+    }
+
+};
+// pilotRover("r");
+// pilotRover("l");
+pilotRover("f");

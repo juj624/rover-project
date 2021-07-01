@@ -243,10 +243,7 @@ function commands(listOfCommands) {
             case "l":
                 turnLeft(rover);
                 break;
-            case "b":
-                moveBackward(rover);
-                break;
-            //Bonus3: Add validation so that the inputs must be f, b, r, or l
+                
             default:
                 console.log("Only this commands are possible: l, r, b or f");
                 break;
