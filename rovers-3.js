@@ -1,15 +1,16 @@
 
 
+
 var rover = {
     x: 0,
     y: 0,
     direction: "N",
     travelLog: [0, 0]
 }
-
+console.log(rover.direction)
 
 var grid = [
-    [" ", " ", "", " ", " ", " ", " ", " ", " ", " "],
+    ["N", " ", "", " ", " ", " ", " ", " ", " ", " "],
     [" ", " ", " ", " ", " ", "", " ", " ", " ", " "],
     [" ", " ", " ", " ", " ", "", " ", " ", " ", " "],
     [" ", " ", " ", " ", "", " ", " ", " ", " ", " "],
@@ -23,18 +24,18 @@ var grid = [
 
 function turnLeft(rover) {
     console.log("turnLeft was called!");
-    switch ((rover).direction) {
+    switch (rover.direction) {
         case "N":
-            (rover).direction = "S";
+            rover.direction = "W";
             break;
         case "W":
-            (rover).direction = "S";
+            rover.direction = "S";
             break;
         case "S":
-            (rover).direction = "E";
+            rover.direction = "E";
             break;
         case "E":
-            (rover).direction = "N";
+            rover.direction = "N";
             break;
         default:
     }
@@ -51,18 +52,22 @@ function turnRight(rover) {
     switch (rover.direction) {
         case "N":
             rover.direction = "E";
+            grid[rover.x][rover.y] = rover.direction;
             break;
         case "W":
             rover.direction = "N";
+            grid[rover.x][rover.y] = rover.direction;
             break;
         case "S":
             rover.direction = "W";
+            grid[rover.x][rover.y] = rover.direction;
             break;
         case "E":
             rover.direction = "S";
+            grid[rover.x][rover.y] = rover.direction;
             break;
     }
-    console.log(`Rover Direction: ${rover.direction}`)
+
 }
 
 // turnRight(rover);
@@ -72,74 +77,97 @@ function moveForward(rover) {
     console.log("moveForward was called");
     switch (rover.direction) {
 
-        case rover.direction = "N":
+        case "N":
             if (rover.y === 0) {
                 console.log("you are out");
             } else {
                 rover.y = rover.y - 1;
+                grid[rover.x][rover.y] = rover.direction;
+                travelLog.push([rover.x, rover.y]);
             }
             break;
 
-        case rover.direction = "S":
+        case "S":
             if (rover.y === 9) {
                 console.log("you are out");
             } else {
                 rover.y = rover.y + 1;
+                grid[rover.y][rover.x] = rover.direction;
+                rover.travelLog.push([rover.x, rover.y]);
             }
             break;
 
-        case rover.direction = "W":
+        case "W":
             if (rover.x === 0) {
                 console.log("you are out");
             } else {
                 rover.x = rover.x - 1;
+                grid[rover.y][rover.x] = rover.direction;
+                rover.travelLog.push([rover.x, rover.y]);
             }
             break;
-        case rover.direction = "E":
+        case "E":
             if (rover.x === 9) {
                 console.log("you are out")
             } else {
                 rover.x = rover.x + 1;
+                grid[rover.y][rover.x] = rover.direction;
+                rover.travelLog.push([rover.x, rover.y]);
             }
             break;
     }
     console.log(rover);
+    // return grid[rover.y][rover.x]
 }
 
 // moveForward(rover);
 
 
 
-function pilotRover(rover) {
-    var listOfCommands = ["r", "f", "l"];
+function pilotRover(string) {
 
-    for (var i = 0; i <= listOfCommands.length; i++) {
-        switch (rover === listOfCommands[i]) {
 
-            case "f":
-                moveForward(rover);
-                console.log(moveForward(rover))
-                break;
+    switch (string) {
 
-            case "r":
-                turnRight(rover);
-                console.log(turnRight(rover))
+        case "f":
+            moveForward(rover);
+            console.table(grid)
+            break;
 
-                break;
+        case "r":
+            turnRight(rover);
+            console.table(grid)
 
-            case "l":
-                turnLeft(rover);
-                console.log(turnLeft(rover))
+            break;
+        // 
+        case "l":
+            turnLeft(rover);
+            console.table(grid)
 
-                break;
+            break;
 
-            default:
-                console.log("Only this commands are possible: l, r or f");
-                break;
-        }
+        default:
+            console.log("Only this commands are possible: l, r or f");
+            break;
+
     }
 
 };
-// pilotRover("r");
-// pilotRover("l");
-pilotRover("f");
+
+var prompt = require("prompt");
+prompt.start();
+
+console.table(grid)
+
+
+function roverProject() {
+    prompt.get({
+        letter: "player",
+        description: "what direction do you want ?"
+    }, function (err, res) {
+        string = res.player;
+        pilotRover(string);
+    })
+
+}
+roverProject()
