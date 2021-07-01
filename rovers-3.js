@@ -10,16 +10,17 @@ var rover = {
 console.log(rover.direction)
 
 var grid = [
-    ["N", " ", "", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", "", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", "", " ", " ", " ", " "],
-    [" ", " ", " ", " ", "", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", "", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", "", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", "", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", "", " ", " ", " ", " ", " ", " "]
+    ["N"," "," "," "," "," "," "," "," "," "],
+    [" "," "," "," "," "," "," "," "," "," "],
+    [" "," "," "," "," "," "," "," "," "," "],
+    [" "," "," "," "," "," "," "," "," "," "],
+    [" "," "," "," "," "," "," "," "," "," "],
+    [" "," "," "," "," "," "," "," "," "," "],
+    [" "," "," "," "," "," "," "," "," "," "],
+    [" "," "," "," "," "," "," "," "," "," "],
+    [" "," "," "," "," "," "," "," "," "," "],
+    [" "," "," "," "," "," "," "," "," "," "],
+   
 ];
 
 function turnLeft(rover) {
@@ -27,19 +28,22 @@ function turnLeft(rover) {
     switch (rover.direction) {
         case "N":
             rover.direction = "W";
+            grid[rover.y][rover.x] = rover.direction;
             break;
         case "W":
             rover.direction = "S";
+            grid[rover.y][rover.x] = rover.direction;
             break;
         case "S":
             rover.direction = "E";
+            grid[rover.y][rover.x] = rover.direction;
             break;
         case "E":
             rover.direction = "N";
+            grid[rover.y][rover.x] = rover.direction;
             break;
         default:
     }
-    console.log(`Rover Direction: ${(rover).direction}`)
 }
 
 // turnLeft(rover);
@@ -48,23 +52,23 @@ function turnLeft(rover) {
 
 
 function turnRight(rover) {
-    console.log("turnRight was called!");
+    console.log(`turnRight was called!`, rover);
     switch (rover.direction) {
         case "N":
             rover.direction = "E";
-            grid[rover.x][rover.y] = rover.direction;
+            grid[rover.y][rover.x] = rover.direction;
             break;
         case "W":
             rover.direction = "N";
-            grid[rover.x][rover.y] = rover.direction;
+            grid[rover.y][rover.x] = rover.direction;
             break;
         case "S":
             rover.direction = "W";
-            grid[rover.x][rover.y] = rover.direction;
+            grid[rover.y][rover.x]= rover.direction;
             break;
         case "E":
             rover.direction = "S";
-            grid[rover.x][rover.y] = rover.direction;
+            grid[rover.y][rover.x] = rover.direction;
             break;
     }
 
@@ -82,8 +86,9 @@ function moveForward(rover) {
                 console.log("you are out");
             } else {
                 rover.y = rover.y - 1;
+                console.log(`cas N y:${rover.y}; x:${rover.x}`)
                 grid[rover.x][rover.y] = rover.direction;
-                travelLog.push([rover.x, rover.y]);
+                rover.travelLog.push([rover.x, rover.y]);
             }
             break;
 
@@ -92,6 +97,7 @@ function moveForward(rover) {
                 console.log("you are out");
             } else {
                 rover.y = rover.y + 1;
+                console.log(`cas s y:${rover.y}; x:${rover.x}`)
                 grid[rover.y][rover.x] = rover.direction;
                 rover.travelLog.push([rover.x, rover.y]);
             }
@@ -102,6 +108,7 @@ function moveForward(rover) {
                 console.log("you are out");
             } else {
                 rover.x = rover.x - 1;
+                console.log(`cas w y:${rover.y}; x:${rover.x}`)
                 grid[rover.y][rover.x] = rover.direction;
                 rover.travelLog.push([rover.x, rover.y]);
             }
@@ -111,6 +118,7 @@ function moveForward(rover) {
                 console.log("you are out")
             } else {
                 rover.x = rover.x + 1;
+                console.log(`cas E y:${rover.y}; x:${rover.x}`)
                 grid[rover.y][rover.x] = rover.direction;
                 rover.travelLog.push([rover.x, rover.y]);
             }
@@ -126,7 +134,6 @@ function moveForward(rover) {
 
 function pilotRover(string) {
 
-
     switch (string) {
 
         case "f":
@@ -139,7 +146,7 @@ function pilotRover(string) {
             console.table(grid)
 
             break;
-        // 
+
         case "l":
             turnLeft(rover);
             console.table(grid)
@@ -162,11 +169,13 @@ console.table(grid)
 
 function roverProject() {
     prompt.get({
-        letter: "player",
+        name: "player",
         description: "what direction do you want ?"
     }, function (err, res) {
         string = res.player;
         pilotRover(string);
+
+        roverProject()
     })
 
 }
